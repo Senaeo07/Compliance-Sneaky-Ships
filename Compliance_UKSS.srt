@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report Type="TabularSheet" Top="1.0" Left="1.0" Bottom="1.0" Right="1.0" HeaderFromEdge="0.5" FooterFromEdge="0.75" PageNumbering="0" HorizontalWrap="true" PaperSize="8.5x11.0" Orientation="1" TabStops="0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0"
+ Prompting="true"><Version>12.1</Version>
+<ReportProperty Name="report.author">
+<![CDATA[iah-myrona]]>
+</ReportProperty>
+<ReportProperty Name="default.zoom">
+<![CDATA[1.0]]>
+</ReportProperty>
+<ReportProperty Name="report.modifiedUser">
+<![CDATA[iah-myrona]]>
+</ReportProperty>
+<ReportProperty Name="TextMode">
+<![CDATA[false]]>
+</ReportProperty>
+<ReportProperty Name="edit.layout">
+<![CDATA[false]]>
+</ReportProperty>
+<ReportProperty Name="live.edit">
+<![CDATA[false]]>
+</ReportProperty>
+<ReportProperty Name="sortOnHeader">
+<![CDATA[true]]>
+</ReportProperty>
+<ReportProperty Name="report.modified">
+<![CDATA[2018-11-01 16:36:09]]>
+</ReportProperty>
+<ReportProperty Name="report.created">
+<![CDATA[2018-11-01 14:28:58]]>
+</ReportProperty>
+<Parameters>
+</Parameters>
+<ParameterSheets>
+</ParameterSheets>
+<RunningTotals>
+</RunningTotals>
+<datasource name="ETMS" type="jdbc">
+<ds_jdbc url="jdbc:db2://iah.iah.ei:50000/IAH" driver="com.ibm.db2.jcc.DB2Driver" requireLogin="true" save="true" transactionIsolation="1" nameOption="3" ansiJoin="true" unasgn="false" mvenabled="false" custom="false" user="inetsoft" password="\pwd0f351f5a2c3d2d2916">
+<version>11.2</version>
+<folder name="ETMS Data Source Queries"/>
+</ds_jdbc>
+</datasource>
+<query name="ComplianceOnhands" type="jdbc" datasource="ETMS">
+<query_jdbc>
+<uniform_sql parse="false">
+<where>
+</where>
+<sortby></sortby>
+<groupby></groupby>
+<having>
+</having>
+<sqlstring parseResult="-1"><![CDATA[SELECT
+                OH.ONHAND_REF,
+                OH.SHPMNT_REF,
+                OH.SHIPMENT_TYPE,
+                FRD.DATE_CREATE AS "FRD_DATE",
+                FRT.DATE_CREATE AS "FRT_DATE"
+FROM            EXPORT.ONHAND_HDR OH
+
+LEFT JOIN       EXPORT.STAT_ITEM FRD ON FRD.INVOICE_REF in(OH.ONHAND_REF, OH.SHPMNT_REF) and FRD.STAT_CODE = 'FRD'
+LEFT JOIN       EXPORT.STAT_ITEM FRT ON FRT.INVOICE_REF in(OH.ONHAND_REF, OH.SHPMNT_REF) and FRT.STAT_CODE = 'FRT'   
+
+WHERE           --OH.DATE_CREATE > '118102000000000000'           
+                FRD.DATE_STAT >=( CAST( YEAR( CURRENT TIMESTAMP - 1 DAYS ) - 1900 AS DECIMAL ) *
+	        1000000000000000 ) +( CAST( MONTH( CURRENT TIMESTAMP - 1 DAYS ) AS DECIMAL ) * 10000000000000
+                ) +( CAST( DAY( CURRENT TIMESTAMP - 1 DAYS ) AS DECIMAL ) * 100000000000 )
+ 
+and             OH.SHIPMENT_TYPE in ('OHA', 'EHA', 'EDA', 'CHA', 'ICA', 'DCA')]]></sqlstring>
+<columnInfo>
+<column type="string">
+<![CDATA[ONHAND_REF]]>
+</column>
+<column type="string">
+<![CDATA[SHPMNT_REF]]>
+</column>
+<column type="string">
+<![CDATA[SHIPMENT_TYPE]]>
+</column>
+<column type="double">
+<![CDATA[FRD_DATE]]>
+</column>
+<column type="double">
+<![CDATA[FRT_DATE]]>
+</column>
+</columnInfo>
+</uniform_sql>
+<version>4.4</version>
+<maxrows>0</maxrows>
+<timeout>0</timeout>
+<visible>true</visible>
+<name><![CDATA[ComplianceOnhands]]></name>
+<datasource><![CDATA[ETMS]]></datasource>
+</query_jdbc>
+</query>
+<FormulaInfos>
+</FormulaInfos>
+<reportAssetRepository>
+</reportAssetRepository>
+<Header Type="256">
+<TextElement ID="Text1" Alignment="65" Indent="0.0" Hindent="0" Spacing="0" Visible="true" HideOnPrint="false" KeepWithNext="false" Font="Dialog-PLAIN-10" Foreground="-16777216" FillStyle="0" TabStops="0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0" Justify="false" Orphan="false" TextAdvance="3">
+<![CDATA[_#start__#end_]]>
+</TextElement>
+</Header>
+<Shapes>
+</Shapes>
+<Grid Rows="1" Cols="1">
+<GR Height="300">
+<GD Width="1*" Repeat="false" CellFitPage="true">
+<TableElement ID="Table1" Alignment="1" Indent="0.0" Hindent="0" Spacing="0" Visible="true" HideOnPrint="false" KeepWithNext="false" Font="Dialog-PLAIN-10" Foreground="-16777216" TableWidth="0.0" AdhocEnabled="true" Layout="1" TableAdvance="1" MaxColWidth="0.0" OrphanControl="false" FillPage="false" MultiColumn="0" KeepSpanTogether="false" KeepGroupTogether="false" Padding="0,1,0,1" EmbedWidth="false" Embedded="true">
+<property><name><![CDATA[grow]]></name><value><![CDATA[true]]></value></property>
+<tableLayout columns="5" mode="2">
+<hregions>
+<layoutRegion>
+<tableDataPath>
+<level>-1</level>
+<index>0</index>
+<col>false</col>
+<row>true</row>
+<type>256</type>
+<dtype>string</dtype>
+<path>
+</path>
+</tableDataPath>
+<region  rows="1" visible="true" virtual="false">
+<rowHeight row="0" height="-1"/>
+<rowBinding row="0" binding="-1"/>
+<cell row="0" column="0">
+<cellBinding  type="2" btype="2" expansion="0" pageAfter="false" mergeCells="false" fmode="-1">
+<value><![CDATA[ONHAND_REF]]></value>
+</cellBinding>
+</cell>
+<cell row="0" column="1">
+<cellBinding  type="2" btype="2" expansion="0" pageAfter="false" mergeCells="false" fmode="-1">
+<value><![CDATA[SHIPMENT_TYPE]]></value>
+</cellBinding>
+</cell>
+<cell row="0" column="2">
+<cellBinding  type="2" btype="2" expansion="0" pageAfter="false" mergeCells="false" fmode="-1">
+<value><![CDATA[SHPMNT_REF]]></value>
+</cellBinding>
+</cell>
+<cell row="0" column="3">
+<cellBinding  type="2" btype="2" expansion="0" pageAfter="false" mergeCells="false" fmode="-1">
+<value><![CDATA[FRD_DATE]]></value>
+</cellBinding>
+</cell>
+<cell row="0" column="4">
+<cellBinding  type="2" btype="2" expansion="0" pageAfter="false" mergeCells="false" fmode="-1">
+<value><![CDATA[FRT_DATE]]></value>
+</cellBinding>
+</cell>
+</region>
+</layoutRegion>
+<layoutRegion>
+<tableDataPath>
+<level>-1</level>
+<index>0</index>
+<col>false</col>
+<row>true</row>
+<type>512</type>
+<dtype>string</dtype>
+<path>
+</path>
+</tableDataPath>
+<region  rows="1" visible="true" virtual="false">
+<rowHeight row="0" height="-1"/>
+<rowBinding row="0" binding="-1"/>
+<cell row="0" column="0">
+<cellBinding  type="2" btype="2" expansion="2" pageAfter="false" mergeCells="false" fmode="-1">
+<value><![CDATA[ONHAND_REF]]></value>
+</cellBinding>
+</cell>
+<cell row="0" column="1">
+<cellBinding  type="2" btype="2" expansion="2" pageAfter="false" mergeCells="false" fmode="-1">
+<value><![CDATA[SHIPMENT_TYPE]]></value>
+</cellBinding>
+</cell>
+<cell row="0" column="2">
+<cellBinding  type="2" btype="2" expansion="2" pageAfter="false" mergeCells="false" fmode="-1">
+<value><![CDATA[SHPMNT_REF]]></value>
+</cellBinding>
+</cell>
+<cell row="0" column="3">
+<cellBinding  type="2" btype="2" expansion="2" pageAfter="false" mergeCells="false" fmode="-1">
+<value><![CDATA[FRD_DATE]]></value>
+</cellBinding>
+</cell>
+<cell row="0" column="4">
+<cellBinding  type="2" btype="2" expansion="2" pageAfter="false" mergeCells="false" fmode="-1">
+<value><![CDATA[FRT_DATE]]></value>
+</cellBinding>
+</cell>
+</region>
+</layoutRegion>
+</hregions>
+<vregions>
+</vregions>
+<cwidths>
+</cwidths>
+<spans>
+</spans>
+</tableLayout>
+<bindingAttr type="3" adhoc="false" class="BindingAttr">
+<filter class="SourceAttr" type="4" source="ComplianceOnhands" prefix="ETMS" >
+<property><name><![CDATA[plabel]]></name><value><![CDATA[ETMS]]></value></property>
+<property><name><![CDATA[label]]></name><value><![CDATA[ComplianceOnhands]]></value></property>
+<property><name><![CDATA[description]]></name><value><![CDATA[ComplianceOnhands]]></value></property>
+</filter>
+<filter class="ConditionAttr" >
+<conditions>
+</conditions>
+</filter>
+<filter class="GroupAttr" sorted="false" >
+<aggregates>
+</aggregates>
+<groups>
+</groups>
+<mergeGroups>
+</mergeGroups>
+<showGroupColumns>
+</showGroupColumns>
+</filter>
+<filter class="ColumnSelectionAttr" >
+<ColumnSelection>
+<dataRef class="inetsoft.report.internal.binding.BaseField" attribute="ONHAND_REF" description="" visible="true" groupField="false" dataType="string" order="0" ><view><![CDATA[ONHAND_REF]]></view>
+</dataRef><dataRef class="inetsoft.report.internal.binding.BaseField" attribute="SHIPMENT_TYPE" description="" visible="true" groupField="false" dataType="string" order="0" ><view><![CDATA[SHIPMENT_TYPE]]></view>
+</dataRef><dataRef class="inetsoft.report.internal.binding.BaseField" attribute="SHPMNT_REF" description="" visible="true" groupField="false" dataType="string" order="0" ><view><![CDATA[SHPMNT_REF]]></view>
+</dataRef><dataRef class="inetsoft.report.internal.binding.BaseField" attribute="FRD_DATE" description="" visible="true" groupField="false" dataType="double" order="0" ><view><![CDATA[FRD_DATE]]></view>
+</dataRef><dataRef class="inetsoft.report.internal.binding.BaseField" attribute="FRT_DATE" description="" visible="true" groupField="false" dataType="double" order="0" ><view><![CDATA[FRT_DATE]]></view>
+</dataRef></ColumnSelection>
+<ColumnSelection>
+<dataRef class="inetsoft.report.internal.binding.BaseField" attribute="ONHAND_REF" description="" visible="true" groupField="false" dataType="string" order="0" ><view><![CDATA[ONHAND_REF]]></view>
+</dataRef><dataRef class="inetsoft.report.internal.binding.BaseField" attribute="SHIPMENT_TYPE" description="" visible="true" groupField="false" dataType="string" order="0" ><view><![CDATA[SHIPMENT_TYPE]]></view>
+</dataRef><dataRef class="inetsoft.report.internal.binding.BaseField" attribute="SHPMNT_REF" description="" visible="true" groupField="false" dataType="string" order="0" ><view><![CDATA[SHPMNT_REF]]></view>
+</dataRef><dataRef class="inetsoft.report.internal.binding.BaseField" attribute="FRD_DATE" description="" visible="true" groupField="false" dataType="double" order="0" ><view><![CDATA[FRD_DATE]]></view>
+</dataRef><dataRef class="inetsoft.report.internal.binding.BaseField" attribute="FRT_DATE" description="" visible="true" groupField="false" dataType="double" order="0" ><view><![CDATA[FRT_DATE]]></view>
+</dataRef></ColumnSelection>
+<allRows>
+</allRows>
+</filter>
+<filter class="FormulaFieldAttr" >
+</filter>
+<bindingOption class="TableOption" showHeader="true" showGroupCols="false" isSubTotalHidden="false" inplace="true" breakAfter="false" grandTotal="true" summaryOnly="false" mergeGroup="false" repeatGroupHeader="false" aggTopN="false" hierarchy="false">
+</bindingOption>
+</bindingAttr>
+<Table Rows="2" Cols="5" HeaderRow="1" HeaderCol="0" TrailerRow="0" TrailerCol="0">
+<TR>
+<TD Type="string"><![CDATA[ONHAND_REF]]></TD><TD Type="string"><![CDATA[SHIPMENT_TYPE]]></TD><TD Type="string"><![CDATA[SHPMNT_REF]]></TD><TD Type="string"><![CDATA[FRD_DATE]]></TD><TD Type="string"><![CDATA[FRT_DATE]]></TD></TR>
+<TR>
+<TD Type="string"><![CDATA[XXXXXXXX]]></TD><TD Type="string"><![CDATA[XXXXXXXX]]></TD><TD Type="string"><![CDATA[XXXXXXXX]]></TD><TD Type="double"><![CDATA[999.99]]></TD><TD Type="double"><![CDATA[999.99]]></TD></TR>
+</Table>
+</TableElement>
+</GD>
+</GR>
+</Grid>
+</Report>
